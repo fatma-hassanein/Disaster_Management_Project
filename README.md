@@ -12,23 +12,23 @@ The repo consists folders of the following structure:
 
 * app
     * template
-        * master.html  # main page of web app
-        * go.html  # classification result page of web app
-    * run.py  # Flask file that runs app
+        * master.html &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# main page of web app
+        * go.html &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# classification result page of web app
+    * run.py &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Flask file that runs app
 
 * data
-    * disaster_categories.csv           # data to process 
-    * disaster_messages.csv             # data to process
-    * process_data.py                   # python script for the ETL Transformation of the data
-    * DisasterResponse.db               # database created from code to save cleaned data
+    * disaster_categories.csv &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# data to process 
+    * disaster_messages.csv &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# data to process
+    * process_data.py &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# python script for the ETL Transformation of the data
+    * DisasterResponse.db &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# database created from code to save cleaned data
 
 * models
-    * train_classifier.py               # python script to create machine learning pipeline model for the dataset
-    * classifier.pkl                    # saved model
+    * train_classifier.py &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# python script to create machine learning pipeline model for the dataset
+    * classifier.pkl &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# saved model
 
 * notebooks
-    * ETL_Pipeline_Preparation.ipynb    # Jupyter Notebook to explain ETL Script step by step
-    * ML_Pipeline_Preparation.ipynb     # Jupyter Notebook to explain Machine Learning Model creation and improvements step by step
+    * ETL_Pipeline_Preparation.ipynb &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Jupyter Notebook to explain ETL Script step by step
+    * ML_Pipeline_Preparation.ipynb &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Jupyter Notebook to explain Machine Learning Model creation and improvements step by step
 
 * README.md
 
