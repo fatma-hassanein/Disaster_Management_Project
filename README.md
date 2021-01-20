@@ -28,7 +28,7 @@ The repo consists folders of the following structure:
 
 * notebooks
     * ETL_Pipeline_Preparation.ipynb &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Jupyter Notebook to explain ETL Script step by step
-    * ML_Pipeline_Preparation.ipynb &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Jupyter Notebook to explain Machine Learning Model creation and improvements step by step
+    * ML_Pipeline_Preparation.ipynb &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Jupyter Notebook to explain ML Model creation step by step
 
 * README.md
 
