@@ -102,7 +102,7 @@ def build_model():
     }
 
     cv = GridSearchCV(pipeline, param_grid = parameters, cv=2, scoring='accuracy', verbose=10)
-    return pipeline
+    return cv
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
