@@ -6,6 +6,8 @@ This project is in a form of a Web App implemented using python and its librarie
 that can classify messages sent during disasters and correlate it to various categories in order to facilitate disaster response. 
 This is a Udacity Nanodegree Educational Project.
 
+![alt text](https://github.com/fatma-hassanein/Disaster_Management_Project/blob/main/images/AppView.png?raw=true)
+
 ## Contents
 
 The repo consists folders of the following structure:
@@ -31,6 +33,18 @@ The repo consists folders of the following structure:
     * ML_Pipeline_Preparation.ipynb &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# Jupyter Notebook to explain ML Model creation step by step
 
 * README.md
+
+## Code Flow and Results
+
+The code cleans data extracted from dataset containing real messages that were sent during disaster events using process_data.py file. Then, it runs a ML Pipeline using CountVectorizer, TfidfTransformer then MultiOutputClassifier and KNeighborsClassifier to train the model.
+
+After that, GridSearch is used to find the best parameters for the classifier and the results was using 10 n_neighbours and uniform weights. To enhance the model further, a custom extractor called StartingVerbExtractor was used to increase the accuracy.
+
+![alt text](https://github.com/fatma-hassanein/Disaster_Management_Project/blob/main/images/gridsearch.png?raw=true)
+
+The precision reached 0.7 after being 0.58 before enhancement.
+
+![alt text](https://github.com/fatma-hassanein/Disaster_Management_Project/blob/main/images/classification_report.png?raw=true)
 
 ### Instructions:
 1. Run the following commands in the project's root directory to set up your database and model.
