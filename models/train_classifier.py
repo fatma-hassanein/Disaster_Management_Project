@@ -95,6 +95,13 @@ def build_model():
 
             ('clf', MultiOutputClassifier(KNeighborsClassifier(n_neighbors=10)))
         ])
+
+    parameters = {
+        'clf__estimator__n_neighbors': [3, 7, 10],
+        'clf__estimator__weights': ['uniform', 'distance']
+    }
+
+    cv = GridSearchCV(pipeline, param_grid = parameters, cv=2, scoring='accuracy', verbose=10)
     return pipeline
 
 
