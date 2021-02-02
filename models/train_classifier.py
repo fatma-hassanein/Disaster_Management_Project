@@ -15,19 +15,29 @@ from nltk.stem import WordNetLemmatizer
 from sklearn.datasets import make_multilabel_classification
 from sklearn.multioutput import MultiOutputClassifier
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split,GridSearchCV
 from sklearn.metrics import classification_report
 from sklearn.pipeline import Pipeline, FeatureUnion
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 
+from models.utils import StartingVerbExtractor
+
 nltk.download('punkt')
 nltk.download('wordnet')
 nltk.download('averaged_perceptron_tagger')
 
+
 def load_data(database_filepath):
     
+    '''
+    INPUT 
+        database_filepath: Name of Database that contains the cleaned data  
+    OUTPUT
+        Returns two dataframes X representing input for model, Y representing categories as required result for model
+        and names of the categories in Y to evaluate each of them after model training
+    '''
+        
     # load data from database
     engine = create_engine('sqlite:///././'+database_filepath)
     df = pd.read_sql_table('Messages_with_Cats', engine)
@@ -67,45 +77,55 @@ def tokenize(text):
     
 def build_model():
     
+    '''  
+    OUTPUT
+        Returns final pipeline defined after performing gridsearch and classification_reports in notebook
+    '''
+      
     pipeline = Pipeline([
             ('features', FeatureUnion([
 
                 ('text_pipeline', Pipeline([
                     ('vect', CountVectorizer(tokenizer=tokenize)),
                     ('tfidf', TfidfTransformer())
-                ]))
+                ])),
+
+                ('starting_verb', StartingVerbExtractor())
             ])),
 
-            ('clf', MultiOutputClassifier(KNeighborsClassifier()))
+            ('clf', MultiOutputClassifier(KNeighborsClassifier(n_neighbors=10)))
         ])
     return pipeline
 
 
-def classificaion_report_iteration(true_y,pred_y,col_names):
+def evaluate_model(model, X_test, Y_test, category_names):
     
     '''
     INPUT 
-        true_y: Test dataset true results
-        pred_y: Predicted results from the test_X in the testing dataset
-        col_names: Column Names for each category in order to print its scores
+        model: Trained model
+        X_test: Extracted input of X to test the model
+        Y_test: Extracted result of Y to test the model
+        category_names: Name of columns that represent categories names in dataset
     OUTPUT
-        Prints out the scores of each category using the pre-defined function 
-        classification_report along which the category name
+        - Predicts results from Y_test
+        - Prints a classification report for the model comparing predicted results vs. true results
+          and showing the calculated scores.
     '''
-    
-    for i in range(pred_y[0,:].size):
-        print(col_names[i])
-        print(classification_report(true_y[i,:],pred_y[i,:]))
-
-
-def evaluate_model(model, X_test, Y_test, category_names):
     
     # Predict from trained model using the test dataset
     y_pred = model.predict(X_test)
-    classificaion_report_iteration(Y_test.values, y_pred, category_names)
+    print(classification_report(Y_test.values, y_pred,target_names=category_names))
 
 
 def save_model(model, model_filepath):
+    
+    '''
+    INPUT 
+        model: Trained and tested model
+        model_filepath: Name of model output file
+    OUTPUT
+        Saves the model in a pickle file with a specific name
+    '''
     
     file = open(model_filepath, 'wb')
     pickle.dump(model, file)
@@ -117,7 +137,7 @@ def main():
         print('Loading data...\n    DATABASE: {}'.format(database_filepath))
         X, Y, category_names = load_data(database_filepath)
         X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
-        
+
         print('Building model...')
         model = build_model()
         

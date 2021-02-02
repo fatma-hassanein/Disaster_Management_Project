@@ -1,3 +1,6 @@
+import sys, os
+sys.path.insert(0,os.path.dirname(sys.path[0]))
+
 import json
 import plotly
 import pandas as pd
@@ -10,6 +13,8 @@ from flask import render_template, request, jsonify
 from plotly.graph_objs import Bar
 from sklearn.externals import joblib
 from sqlalchemy import create_engine
+
+from models.utils import StartingVerbExtractor
 
 
 app = Flask(__name__)
@@ -43,6 +48,14 @@ def index():
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
     
+    # Get distribution of categories for messages
+    categories = df.iloc[:,4:]
+    categories_counts = []
+    for column in categories:
+        categories_counts.append(categories[column][categories[column] == 1].count())
+    
+    categories_names = list(categories.columns.values)
+    
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
     graphs = [
@@ -61,6 +74,24 @@ def index():
                 },
                 'xaxis': {
                     'title': "Genre"
+                }
+            }
+        },
+        {
+            'data': [
+                Bar(
+                    x=categories_names,
+                    y=categories_counts
+                )
+            ],
+
+            'layout': {
+                'title': 'Distribution of Messages Categories',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Categories"
                 }
             }
         }
